@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .profile-header h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .profile-content {
+            padding: 30px;
+        }
+        
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+        
+        .profile-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .profile-field:last-child {
+            border-bottom: none;
+        }
+        
+        .field-label {
+            font-weight: 600;
+            color: #34495e;
+            flex: 1;
+        }
+        
+        .field-value {
+            flex: 2;
+            text-align: right;
+            color: #2c3e50;
+        }
+        
+        .field-value.empty {
+            color: #95a5a6;
+            font-style: italic;
+        }
+        
+        .bio-content {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ecf0f1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .navigation {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .profile-badge {
+            display: inline-block;
+            background-color: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .created-date {
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
+            <p>@{{ username }} <span class="profile-badge">Verified</span></p>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-section">
+                <h2 class="section-title">Personal Information</h2>
+                
+                <div class="profile-field">
+                    <span class="field-label">First Name:</span>
+                    <span class="field-value">{{ profile.first_name or "Not provided" }}</span>
+                </div>
+                
+                <div class="profile-field">
+                    <span class="field-label">Last Name:</span>
+                    <span class="field-value">{{ profile.last_name or "Not provided" }}</span>
+                </div>
+                
+                <div class="profile-field">
+                    <span class="field-label">Email:</span>
+                    <span class="field-value">{{ profile.email or "Not provided" }}</span>
+                </div>
+                
+                <div class="profile-field">
+                    <span class="field-label">Phone:</span>
+                    <span class="field-value {% if not profile.phone %}empty{% endif %}">
+                        {{ profile.phone or "Not provided" }}
+                    </span>
+                </div>
+            </div>
+
+            {% if profile.bio %}
+            <div class="profile-section">
+                <h2 class="section-title">About Me</h2>
+                <div class="bio-content">
+                    {{ profile.bio }}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-value">{{ profile.id }}</div>
+                    <div class="stat-label">Profile ID</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">Active</div>
+                    <div class="stat-label">Status</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ profile.created_at.strftime('%b %Y') }}</div>
+                    <div class="stat-label">Member Since</div>
+                </div>
+            </div>
+
+            <div class="created-date">
+                Profile created on {{ profile.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="/protected" class="btn btn-secondary">← Dashboard</a>
+            <a href="/profile/create" class="btn btn-primary">Edit Profile</a>
+            <a href="/profile/me/api" class="btn btn-secondary">View JSON</a>
+        </div>
+    </div>
+</body>
+</html>

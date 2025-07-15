@@ -1,0 +1,16 @@
+# requirements.txt (Updated)
+fastapi
+uvicorn[standard]
+sqlalchemy
+passlib[bcrypt]
+python-jose[cryptography]
+redis
+jinja2
+authlib
+python-dotenv
+httpx
+itsdangerous
+python-multipart
+pydantic
+requests
+email-validator  # For email validation in pydantic
